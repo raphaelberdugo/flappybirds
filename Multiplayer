@@ -1,0 +1,69 @@
+; creates turtle
+to setup
+  ca
+  cro 2
+  ask turtles with [who = 0] [set color orange set shape "circle"]
+  ask turtles with [who = 1] [set color violet set shape "square"]
+end
+
+; sets background
+to background
+  set pcolor sky
+  if ((15 > pxcor) and (pxcor > 10) and (18 > pycor) and (pycor > 3))
+  [set pcolor green]
+  if ((15 > pxcor) and (pxcor > 10) and (-18 < pycor) and (pycor < -3))
+  [set pcolor green]
+  if ((8 > pxcor) and (pxcor > 3) and (18 > pycor) and (pycor > -2))
+  [set pcolor green]
+  if ((8 > pxcor) and (pxcor > 3) and (-18 < pycor) and (pycor < -8))
+  [set pcolor green]
+  if ((-15 < pxcor) and (pxcor < -10) and (18 > pycor) and (pycor > 1))
+  [set pcolor green]
+  if ((-15 < pxcor) and (pxcor < -10) and (-18 < pycor) and (pycor < -5))
+  [set pcolor green]
+  if ((-8 < pxcor) and (pxcor < -3) and (18 > pycor) and (pycor > 8))
+  [set pcolor green]
+  if ((-8 < pxcor) and (pxcor < -3) and (-18 < pycor) and (pycor < 2))
+  [set pcolor green]
+end
+
+; deals with gravity and termination of game
+to flappybird
+  set heading 180
+  if ycor != -15 [
+  every .2 [
+  fd 1
+  ask patches with [pcolor = green] [ask patch-at -1 0 [set pcolor green]]
+  ask patches with [pcolor = green] [ask patch-at 1 0 [set pcolor sky]]]]
+  if ycor = -15
+  [die]
+  if pcolor = green
+  [die]
+end
+
+; deals with upwards movement
+to up1
+  ask turtles with [who = 0] [
+  set heading 0
+  fd 3]
+end
+to up2
+  ask turtles with [who = 1] [
+  set heading 0
+  fd 3]
+end
+
+to scoreboard [n]
+  ifelse xcor > 8
+  [scoreboard (n + 1)]
+  [scoreboard n]
+  ifelse xcor > 15
+  [scoreboard (n + 1)]
+  [scoreboard n]
+  ifelse xcor > -10
+  [scoreboard (n + 1)]
+  [scoreboard n]
+  ifelse xcor > -3
+  [scoreboard (n + 1)]
+  [scoreboard n]
+end
